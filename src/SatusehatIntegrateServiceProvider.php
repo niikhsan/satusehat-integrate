@@ -54,6 +54,18 @@ class SatusehatIntegrateServiceProvider extends ServiceProvider
             ], 'icd10');
         }
 
+        // Publish ICD-9 csv data
+        $this->publishes([
+            __DIR__.'/../database/seeders/csv/icd9.csv.stub' => database_path('/seeds/csv/icd9.csv'),
+        ], 'icd9');
+
+        // Publish Seeder for ICD9
+        if (! class_exists('Icd9Seeder')) {
+            $this->publishes([
+                __DIR__.'/../database/seeders/Icd9Seeder.php.stub' => database_path('/seeds/Icd9Seeder.php'),
+            ], 'icd9');
+        }
+
     }
 
     public function register()

@@ -12,7 +12,7 @@ class Icd10Seeder extends CsvSeeder
      * @return void
      */
     public function __construct(){
-        $this->file = base_path().'/database/seeders/csv/icd10.csv';
+        $this->file = base_path().'/database/seeds/csv/icd10.csv';
         $this->tablename = config('satusehatintegration.icd10_table_name');
         $this->delimiter = ';';
     }
