@@ -53,25 +53,25 @@ class SatusehatIntegrateServiceProvider extends ServiceProvider
 
         // Publish ICD-10 csv data
         $this->publishes([
-            __DIR__.'/../database/seeders/csv/icd10.csv.stub' => database_path('/seeds/csv/icd10.csv'),
+            __DIR__.'/../database/seeds/csv/icd10.csv.stub' => database_path('/seeds/csv/icd10.csv'),
         ], 'icd10');
 
         // Publish Seeder for ICD10
         if (! class_exists('Icd10Seeder')) {
             $this->publishes([
-                __DIR__.'/../database/seeders/Icd10Seeder.php.stub' => database_path('/seeds/Icd10Seeder.php'),
+                __DIR__.'/../database/seeds/Icd10Seeder.php.stub' => database_path('/seeds/Icd10Seeder.php'),
             ], 'icd10');
         }
 
         // Publish ICD-9 csv data
         $this->publishes([
-            __DIR__.'/../database/seeders/csv/icd9.csv.stub' => database_path('/seeds/csv/icd9.csv'),
+            __DIR__.'/../database/seeds/csv/icd9.csv.stub' => database_path('/seeds/csv/icd9.csv'),
         ], 'icd9');
 
         // Publish Seeder for ICD9
         if (! class_exists('Icd9Seeder')) {
             $this->publishes([
-                __DIR__.'/../database/seeders/Icd9Seeder.php.stub' => database_path('/seeds/Icd9Seeder.php'),
+                __DIR__.'/../database/seeds/Icd9Seeder.php.stub' => database_path('/seeds/Icd9Seeder.php'),
             ], 'icd9');
         }
 

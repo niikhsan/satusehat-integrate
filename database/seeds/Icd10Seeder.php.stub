@@ -1,9 +1,10 @@
 <?php
+namespace Database\Seeds;
 
 use JeroenZwart\CsvSeeder\CsvSeeder;
 use DB;
 
-class Icd9Seeder extends CsvSeeder
+class Icd10Seeder extends CsvSeeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +12,8 @@ class Icd9Seeder extends CsvSeeder
      * @return void
      */
     public function __construct(){
-        $this->file = base_path().'/database/seeds/csv/icd9.csv';
-        $this->tablename = config('satusehatintegration.icd9_table_name');
+        $this->file = base_path().'/database/seeds/csv/icd10.csv';
+        $this->tablename = config('satusehatintegration.icd10_table_name');
         $this->delimiter = ';';
     }
 
