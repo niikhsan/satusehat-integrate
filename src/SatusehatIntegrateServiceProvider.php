@@ -92,7 +92,7 @@ class SatusehatIntegrateServiceProvider extends ServiceProvider
 
     protected function registerSeedsFrom($path)
     {
-        foreach (glob("$path/*.php") as $filename)
+        foreach (glob("$path/*.php.stub") as $filename)
         {
             include $filename;
             $classes = get_declared_classes();
