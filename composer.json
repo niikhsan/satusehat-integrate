@@ -16,8 +16,6 @@
     "require": {
         "php": "^7.2",
         "guzzlehttp/guzzle": "^7.7",
-        "illuminate/database": "^7.30",
-        "illuminate/support": "^7.30",
         "jeroenzwart/laravel-csv-seeder": "^1.6",
         "phpseclib/phpseclib": "^3.0",
         "vlucas/phpdotenv": "^5.6"
