@@ -1,10 +1,10 @@
 <?php
 
-namespace Niikhsan\Satusehatintegration;
+namespace Niikhsan\SatusehatIntegrate;
 
 use Illuminate\Support\ServiceProvider;
 
-class SatusehatIntegrationServiceProvider extends ServiceProvider
+class SatusehatIntegrateServiceProvider extends ServiceProvider
 {
     public function boot()
     {
