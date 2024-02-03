@@ -1,5 +1,4 @@
 <?php
-namespace Database\Seeders;
 
 use JeroenZwart\CsvSeeder\CsvSeeder;
 use DB;
