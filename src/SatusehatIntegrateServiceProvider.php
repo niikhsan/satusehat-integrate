@@ -80,7 +80,7 @@ class SatusehatIntegrateServiceProvider extends ServiceProvider
                 ], 'icd9');
             }
 
-            $this->registerSeedsFrom(__DIR__.'/database/seeds');
+            $this->registerSeedsFrom(__DIR__.'/../database/seeds');
         }
 
     }
