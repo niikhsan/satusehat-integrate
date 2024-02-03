@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateSatusehatIcd9Table extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->create(config('satusehatintegration.icd9_table_name'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('icd9_code');
+            $table->longText('icd9_en')->nullable();
+            $table->longText('icd9_id')->nullable();
+            $table->longText('long_name')->nullable();
+            $table->boolean('active')->default(true);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->dropIfExists(config('satusehatintegration.icd9_table_name'));
+    }
+}

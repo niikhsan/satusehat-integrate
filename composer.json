@@ -1,0 +1,17 @@
+{
+    "name": "niikhsan/satusehat-integrate",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Niikhsan\\SatusehatIntegrate\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "niikhsan",
+            "email": "aikhsan17@gmail.com"
+        }
+    ],
+    "require": {}
+}

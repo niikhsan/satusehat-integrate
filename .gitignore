@@ -1,0 +1,6 @@
+/vendor/
+*.iml
+.env
+out
+gen
+composer.lock
