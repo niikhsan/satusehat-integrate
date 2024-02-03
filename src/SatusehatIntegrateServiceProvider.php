@@ -5,7 +5,6 @@ namespace Niikhsan\SatusehatIntegrate;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Artisan;
 use App;
 
 class SatusehatIntegrateServiceProvider extends ServiceProvider
