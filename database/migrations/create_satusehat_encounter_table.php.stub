@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateSatusehatEncounterTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->create(config('satusehatintegration.encounter_table_name'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('encounter_uuid')->null();
+            $table->string('subject_reference')->null();
+            $table->string('participant_type')->null();
+            $table->string('participant_individual')->null();
+            $table->string('location_reference')->null();
+            $table->string('identifier')->null();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->dropIfExists(config('satusehatintegration.encounter_table_name'));
+    }
+}

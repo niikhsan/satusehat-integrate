@@ -1,0 +1,45 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateSatusehatCompositionTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->create(config('satusehatintegration.composition_table_name'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('encounter')->null();
+            $table->string('composition_uuid')->null();
+            $table->string('identifier')->null();
+            $table->string('type_code')->null();
+            $table->string('category_code')->null();
+            $table->string('subject_reference')->null();
+            $table->string('author_reference')->null();
+            $table->string('icd10_code')->null();
+            $table->timestamp('date_comp')->null();
+            $table->longText('title')->null(true);
+            $table->string('section_code')->null();
+            $table->longText('section_text')->null(true);
+            $table->timestamps();
+
+            $table->index(['subject_reference', 'composition_uuid', 'encounter', 'author_reference', 'icd10_code'], 'patient_subject_reference_index');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->dropIfExists(config('satusehatintegration.composition_table_name'));
+    }
+}

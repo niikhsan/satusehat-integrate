@@ -80,6 +80,13 @@ class SatusehatIntegrateServiceProvider extends ServiceProvider
                 ], 'icd9');
             }
 
+            // Publish Seeder for master loinc code
+            if (! class_exists('MasterLoincSeeder')) {
+                $this->publishes([
+                    __DIR__.'/../database/seeds/MasterLoincSeeder.php.stub' => database_path('/seeds/MasterLoincSeeder.php'),
+                ], 'master_loinc');
+            }
+
             $this->registerSeedsFrom(__DIR__.'/../database/seeds');
         }
 

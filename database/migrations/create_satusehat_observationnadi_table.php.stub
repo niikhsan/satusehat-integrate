@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateSatusehatObservationnadiTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->create(config('satusehatintegration.observationnadi_table_name'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('encounter')->null();
+            $table->string('observation_uuid')->null();
+            $table->string('performer_reference')->null();
+            $table->string('subject_reference')->null();
+            $table->timestamp('effectiveDateTime')->null();
+            $table->string('result_value')->null();
+            $table->string('unit')->null();
+            $table->string('interpretation')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->dropIfExists(config('satusehatintegration.observationnadi_table_name'));
+    }
+}

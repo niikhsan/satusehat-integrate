@@ -1,0 +1,51 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateMasterLoincTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->create(config('satusehatintegration.master_loinc_table_name'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('kategori')->nullable();
+            $table->string('nama_pemeriksaan')->nullable();
+            $table->string('permintaan_hasil')->nullable();
+            $table->string('spesimen')->nullable();
+            $table->string('tipe_hasil_pemeriksaan')->nullable();
+            $table->string('satuan')->nullable();
+            $table->string('metode_analis')->nullable();
+            $table->string('loinc_num')->nullable(false);
+            $table->text('display_name')->nullable()->change();
+            $table->string('component')->nullable();
+            $table->string('property')->nullable();
+            $table->string('time_aspct')->nullable();
+            $table->string('system')->nullable();
+            $table->string('scale_type')->nullable();
+            $table->string('method_type')->nullable();
+            $table->string('example_units')->nullable();
+            $table->string('code_system')->nullable();
+            $table->string('orders_obs')->nullable();
+            $table->string('version_first_released')->nullable();
+            $table->string('version_last_changed')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->dropIfExists(config('satusehatintegration.master_loinc_table_name'));
+    }
+}
