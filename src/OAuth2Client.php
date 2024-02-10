@@ -9,6 +9,8 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 // SATUSEHAT Model & Log
 use Niikhsan\SatusehatIntegrate\Models\SatusehatLog;
+use Niikhsan\SatusehatIntegrate\Models\SatusehatCondition;
+use Niikhsan\SatusehatIntegrate\Models\SatusehatEncounter;
 use Niikhsan\SatusehatIntegrate\Models\SatusehatToken;
 
 class OAuth2Client
@@ -123,7 +125,7 @@ class OAuth2Client
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 
-    public function log($id, $action, $url, $payload, $response)
+    public function log($id, $statusCode, $action, $url, $payload, $response)
     {
         $status = new SatusehatLog();
         $status->response_id = $id;
@@ -133,6 +135,71 @@ class OAuth2Client
         $status->response = $response;
         $status->user_id = auth()->user() ? auth()->user()->id : 'Cron Job';
         $status->save();
+
+        $dataset = json_decode($payload[0]);
+        if( $statusCode == 200 ) {
+
+            if( $dataset->resourceType == 'Bundle' ) {
+
+                foreach ($dataset->entry as $key => $value) {
+
+                    if( $value['resource']['resourceType'] == 'Encounter' ) {
+
+                        $encounter = new SatusehatEncounter();
+                        $encounter->encounter_uuid = $value['fullUrl'];
+                        $encounter->subject_reference = $value['resource']['subject']['reference'];
+                        $encounter->participant_type = $value['resource']['participant'][0]['type'][0]['coding'][0]['code'];
+                        $encounter->participant_individual = $value['resource']['participant'][0]['individual']['reference'];
+                        $encounter->location_reference = $value['resource']['location'][0]['location']['reference'];
+                        $encounter->identifier = $value['resource']['identifier'][0]['value'];
+                        $encounter->status = $value['resource']['status'];
+                        $encounter->name_patient = $value['resource']['subject']['display'];
+                        $encounter->location_name = $value['resource']['location'][0]['location']['reference'];
+                        $encounter->practitioner_name = $value['resource']['participant'][0]['individual']['display'];
+                        $encounter->ihs_number_organization = $value['resource']['serviceProvider']['reference'];
+                        $encounter->organization_name = isset( $value['resource']['serviceProvider']['display'] ) ? $value['resource']['serviceProvider']['display'] : '';
+                        $encounter->periode_start = $value['resource']['period']['start'];
+                        $encounter->periode_end = $value['resource']['period']['end'];
+                        $encounter->created_at = date('Y-m-d H:i:s');
+                        $encounter->updated_at = date('Y-m-d H:i:s');
+                        $encounter->save();
+
+                    }else if( $value['resource']['resourceType'] == 'Condition' ) {
+
+                        DB::table('satusehat_condition')
+                        ->insert([
+                            'encounter' => $value['resource']['encounter']['reference'],
+                            'condition_uuid' => $value['fullUrl'],
+                            'rank' => $key,
+                            'icd10_code' => $value['resource']['code']['coding'][0]['code'],
+                            'subject_reference' => $value['resource']['subject']['reference'],
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ]);
+
+                        $condition = new SatusehatCondition();
+                        $condition->encounter = $value['resource']['encounter']['reference'];
+                        $condition->condition_uuid = $value['fullUrl'];
+                        $condition->rank = $key;
+                        $condition->icd10_code = $value['resource']['code']['coding'][0]['code'];
+                        $condition->subject_reference = $value['resource']['subject']['reference'];
+                        $condition->encounter_name = $value['resource']['encounter']['display'];
+                        $condition->icd10_name = $value['resource']['code']['coding'][0]['display'];
+                        $condition->name_patient = $value['resource']['subject']['display'];
+                        $condition->created_at = date('Y-m-d H:i:s');
+                        $condition->updated_at = date('Y-m-d H:i:s');
+                        $condition->save();
+
+                    }
+
+                }
+
+            }else{
+
+            }
+
+        }
+
     }
 
     public function get_by_id($resource, $id)
@@ -159,14 +226,14 @@ class OAuth2Client
             if ($response->resourceType == 'OperationOutcome' | $response->total == 0) {
                 $id = 'Error '.$statusCode;
             }
-            $this->log($id, 'GET', $url, null, json_encode($response));
+            $this->log($id, $statusCode, 'GET', $url, null, json_encode($response));
 
             return [$statusCode, $response];
         } catch (ClientException $e) {
             $statusCode = $e->getResponse()->getStatusCode();
             $res = json_decode($e->getResponse()->getBody()->getContents());
 
-            $this->log('Error '.$statusCode, 'GET', $url, null, (array) $res);
+            $this->log('Error '.$statusCode, $statusCode, 'GET', $url, null, (array) $res);
 
             return [$statusCode, $res];
         }
@@ -198,14 +265,14 @@ class OAuth2Client
             } else {
                 $id = $response->entry['0']->resource->id;
             }
-            $this->log($id, 'GET', $url, null, (array) $response);
+            $this->log($id, $statusCode, 'GET', $url, null, (array) $response);
 
             return [$statusCode, $response];
         } catch (ClientException $e) {
             $statusCode = $e->getResponse()->getStatusCode();
             $res = json_decode($e->getResponse()->getBody()->getContents());
 
-            $this->log('Error '.$statusCode, 'GET', $url, null, (array) $res);
+            $this->log('Error '.$statusCode, $statusCode, 'GET', $url, null, (array) $res);
 
             return [$statusCode, $res];
         }
@@ -242,14 +309,14 @@ class OAuth2Client
                     $id = $response->id;
                 }
             }
-            $this->log($id, 'POST', $url, (array) $body, (array) $response);
+            $this->log($id, $statusCode, 'POST', $url, (array) $body, (array) $response);
 
             return [$statusCode, $response];
         } catch (ClientException $e) {
             $statusCode = $e->getResponse()->getStatusCode();
             $res = json_decode($e->getResponse()->getBody()->getContents());
 
-            $this->log('Error '.$statusCode, 'POST', $url, (array) $body, (array) $res);
+            $this->log('Error '.$statusCode, $statusCode, 'POST', $url, (array) $body, (array) $res);
 
             return [$statusCode, $res];
         }
@@ -285,14 +352,14 @@ class OAuth2Client
             } else {
                 $id = $response->id;
             }
-            $this->log($id, 'PUT', $url, (array) $body, (array) $response);
+            $this->log($id, $statusCode, 'PUT', $url, (array) $body, (array) $response);
 
             return [$statusCode, $response];
         } catch (ClientException $e) {
             $statusCode = $e->getResponse()->getStatusCode();
             $res = json_decode($e->getResponse()->getBody()->getContents());
 
-            $this->log('Error '.$statusCode, 'PUT', $url, null, (array) $res);
+            $this->log('Error '.$statusCode, $statusCode, 'PUT', $url, null, (array) $res);
 
             return [$statusCode, $res];
         }

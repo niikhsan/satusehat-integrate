@@ -20,7 +20,7 @@ class CreateSatusehatEncounterTable extends Migration
             $table->string('name_patient')->nullable();
             $table->string('participant_type')->null();
             $table->string('participant_individual')->null();
-            $table->string('practioner_name')->nullable();
+            $table->string('practitioner_name')->nullable();
             $table->string('location_reference')->null();
             $table->string('location_name')->nullable();
             $table->string('identifier')->null();
