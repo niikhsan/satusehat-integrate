@@ -29,7 +29,7 @@ class SatusehatEncounter extends Model
         }
 
         if (! isset($this->table)) {
-            $this->setTable('satusehat_encounter');
+            $this->setTable( config('satusehatintegration.encounter_table_name') );
         }
 
         parent::__construct($attributes);

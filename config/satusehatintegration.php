@@ -11,6 +11,7 @@ return [
     'token_table_name' => 'satusehat_token',
     'icd10_table_name' => 'satusehat_icd10',
     'icd9_table_name' => 'satusehat_icd9',
+    'condition_table_name' => 'satusehat_condition',
     'encounter_table_name' => 'satusehat_encounter',
     'procedure_table_name' => 'satusehat_procedure',
     'composition_table_name' => 'satusehat_composition', 

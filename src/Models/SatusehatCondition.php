@@ -29,7 +29,7 @@ class SatusehatCondition extends Model
         }
 
         if (! isset($this->table)) {
-            $this->setTable('satusehat_condition');
+            $this->setTable( config('satusehatintegration.condition_table_name') );
         }
 
         parent::__construct($attributes);
