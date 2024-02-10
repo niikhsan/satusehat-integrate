@@ -16,10 +16,13 @@ class CreateSatusehatConditionTable extends Migration
         Schema::connection(config('satusehatintegration.database_connection'))->create(config('satusehatintegration.condition_table_name'), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('encounter')->null();
+            $table->string('encounter_name')->null();
             $table->string('condition_uuid')->null();
             $table->integer('rank')->null();
             $table->string('icd10_code')->null();
+            $table->string('icd10_name')->null();
             $table->string('subject_reference')->null();
+            $table->string('name_patient')->nullable();
             $table->timestamps();
 
             $table->index(['subject_reference', 'condition_uuid', 'encounter', 'icd10_code'], 'patient_subject_reference_index');

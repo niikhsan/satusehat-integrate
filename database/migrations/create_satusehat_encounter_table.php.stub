@@ -17,10 +17,18 @@ class CreateSatusehatEncounterTable extends Migration
             $table->bigIncrements('id');
             $table->string('encounter_uuid')->null();
             $table->string('subject_reference')->null();
+            $table->string('name_patient')->nullable();
             $table->string('participant_type')->null();
             $table->string('participant_individual')->null();
+            $table->string('practioner_name')->nullable();
             $table->string('location_reference')->null();
+            $table->string('location_name')->nullable();
             $table->string('identifier')->null();
+            $table->string('status', 50)->nullable();
+            $table->string('ihs_number_organization')->nullable();
+            $table->string('organization_name')->nullable();
+            $table->string('periode_start')->nullable();
+            $table->string('periode_end')->nullable();
             $table->timestamps();
         });
     }
