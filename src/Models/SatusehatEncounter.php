@@ -39,4 +39,19 @@ class SatusehatEncounter extends Model
 
     public $incrementing = false;
 
+    protected $casts = [
+        'encounter_uuid' => 'string',
+        'subject_reference' => 'string',
+        'participant_type' => 'string',
+        'participant_individual' => 'string',
+        'location_reference' => 'string',
+        'identifier' => 'string',
+        'status' => 'string',
+        'name_patient' => 'string',
+        'location_name' => 'string',
+        'practitioner_name' => 'string',
+        'ihs_number_organization' => 'string',
+        'organization_name' => 'string'
+    ];
+
 }

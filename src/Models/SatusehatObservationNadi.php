@@ -29,7 +29,7 @@ class SatusehatObservationNadi extends Model
         }
 
         if (! isset($this->table)) {
-            $this->setTable('satusehat_observationnadi');
+            $this->setTable( config('satusehatintegration.observationnadi_table_name') );
         }
 
         parent::__construct($attributes);

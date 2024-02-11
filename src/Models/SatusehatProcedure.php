@@ -29,7 +29,7 @@ class SatusehatProcedure extends Model
         }
 
         if (! isset($this->table)) {
-            $this->setTable('satusehat_procedure');
+            $this->setTable( config('satusehatintegration.procedure_table_name') );
         }
 
         parent::__construct($attributes);

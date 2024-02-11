@@ -39,4 +39,15 @@ class SatusehatCondition extends Model
 
     public $incrementing = false;
 
+    protected $casts = [
+        'encounter' => 'string',
+        'condition_uuid' => 'string',
+        'rank' => 'integer',
+        'icd10_code' => 'string',
+        'subject_reference' => 'string',
+        'encounter_name' => 'string',
+        'icd10_name' => 'string',
+        'name_patient' => 'string'
+    ];
+
 }

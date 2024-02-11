@@ -29,7 +29,7 @@ class SatusehatObservationDiastol extends Model
         }
 
         if (! isset($this->table)) {
-            $this->setTable('satusehat_observationdiastol');
+            $this->setTable( config('satusehatintegration.observationdiastol_table_name') );
         }
 
         parent::__construct($attributes);

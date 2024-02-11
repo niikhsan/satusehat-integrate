@@ -29,7 +29,7 @@ class SatusehatObservationRespirasi extends Model
         }
 
         if (! isset($this->table)) {
-            $this->setTable('satusehat_observationrespirasi');
+            $this->setTable( config('satusehatintegration.observationrespirasi_table_name') );
         }
 
         parent::__construct($attributes);

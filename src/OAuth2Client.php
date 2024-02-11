@@ -154,14 +154,12 @@ class OAuth2Client
                         $encounter->identifier = $value->resource->identifier[0]->value;
                         $encounter->status = $value->resource->status;
                         $encounter->name_patient = $value->resource->subject->display;
-                        $encounter->location_name = $value->resource->location[0]->location->reference;
+                        $encounter->location_name = $value->resource->location[0]->location->display;
                         $encounter->practitioner_name = $value->resource->participant[0]->individual->display;
                         $encounter->ihs_number_organization = $value->resource->serviceProvider->reference;
                         $encounter->organization_name = isset( $value->resource->serviceProvider->display ) ? $value->resource->serviceProvider->display : '';
                         $encounter->periode_start = $value->resource->period->start;
                         $encounter->periode_end = $value->resource->period->end;
-                        $encounter->created_at = date('Y-m-d H:i:s');
-                        $encounter->updated_at = date('Y-m-d H:i:s');
                         $encounter->save();
 
                     }else if( $value->resource->resourceType == 'Condition' ) {
@@ -175,8 +173,6 @@ class OAuth2Client
                         $condition->encounter_name = $value->resource->encounter->display;
                         $condition->icd10_name = $value->resource->code->coding[0]->display;
                         $condition->name_patient = $value->resource->subject->display;
-                        $condition->created_at = date('Y-m-d H:i:s');
-                        $condition->updated_at = date('Y-m-d H:i:s');
                         $condition->save();
 
                     }

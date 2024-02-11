@@ -29,7 +29,7 @@ class SatusehatComposition extends Model
         }
 
         if (! isset($this->table)) {
-            $this->setTable('satusehat_composition');
+            $this->setTable( config('satusehatintegration.composition_table_name') );
         }
 
         parent::__construct($attributes);

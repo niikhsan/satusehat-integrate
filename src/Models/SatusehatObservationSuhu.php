@@ -29,7 +29,7 @@ class SatusehatObservationSuhu extends Model
         }
 
         if (! isset($this->table)) {
-            $this->setTable('satusehat_observationsuhu');
+            $this->setTable( config('satusehatintegration.observationsuhu_table_name') );
         }
 
         parent::__construct($attributes);
