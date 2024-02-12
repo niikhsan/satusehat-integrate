@@ -20,6 +20,7 @@ return [
     'observationsystol_table_name' => 'satusehat_observationsystol',
     'observationdiastol_table_name' => 'satusehat_observationdiastol', 
     'observationsuhu_table_name' => 'satusehat_observationsuhu',
+    'transaction_response_table_name' => 'satusehat_transaction_response',
 
     /*
      * This is the database connection that will be used by the migration and

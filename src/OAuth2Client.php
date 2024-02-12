@@ -139,6 +139,25 @@ class OAuth2Client
         $dataset = json_decode($payload[0]);
         if( $statusCode == 200 ) {
 
+            $dataset_transaction = $response['entry'];
+            if( count($dataset_transaction) > 0 ) {
+
+                foreach ($dataset_transaction as $key => $value) {
+                
+                    $trans_response = new SatusehatTransactionResponse();
+                    $trans_response->etag = $value->response->etag;
+                    $trans_response->lastModified = $value->response->lastModified;
+                    $trans_response->location = $value->response->location;
+                    $trans_response->status = $value->response->status;
+                    $trans_response->resourceType = $value->response->resourceType;
+                    $trans_response->resourceID = $value->response->resourceID;
+                    $trans_response->post_type = $response['resourceType'];
+                    $trans_response->save();
+
+                }
+
+            }
+
             if( $dataset->resourceType == 'Bundle' ) {
 
                 foreach ($dataset->entry as $key => $value) {

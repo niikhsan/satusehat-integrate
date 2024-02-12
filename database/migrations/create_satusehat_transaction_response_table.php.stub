@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateSatusehatTransactionResponseTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->create(config('satusehatintegration.transaction_response_table_name'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('etag')->null();
+            $table->string('lastModified')->null();
+            $table->string('location')->null();
+            $table->string('status')->null();
+            $table->string('resourceType')->null();
+            $table->string('resourceID')->null();
+            $table->string('post_type')->null();
+            $table->timestamps();
+
+            $table->index(['resourceID'], 'resourceid_index');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::connection(config('satusehatintegration.database_connection'))->dropIfExists(config('satusehatintegration.transaction_response_table_name'));
+    }
+}
