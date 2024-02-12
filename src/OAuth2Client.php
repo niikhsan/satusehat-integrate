@@ -210,6 +210,43 @@ class OAuth2Client
 
     }
 
+    public function get_by_orgId($resource, $id)
+    {
+        $access_token = $this->token();
+
+        if (! isset($access_token)) {
+            return $this->respondError($oauth2);
+        }
+
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Bearer '.$access_token,
+        ];
+
+        $url = $this->base_url.'/'.$resource;
+        $request = new Request('GET', $url, $headers);
+
+        try {
+            $res = $client->sendAsync($request)->wait();
+            $statusCode = $res->getStatusCode();
+            $response = json_decode($res->getBody()->getContents());
+
+            if ($response->resourceType == 'OperationOutcome') {
+                $id = 'Error '.$statusCode;
+            }
+            $this->log($id, $statusCode, 'GET', $url, null, json_encode($response));
+
+            return [$statusCode, $response];
+        } catch (ClientException $e) {
+            $statusCode = $e->getResponse()->getStatusCode();
+            $res = json_decode($e->getResponse()->getBody()->getContents());
+
+            $this->log('Error '.$statusCode, $statusCode, 'GET', $url, null, (array) $res);
+
+            return [$statusCode, $res];
+        }
+    }
+
     public function get_by_id($resource, $id)
     {
         $access_token = $this->token();
