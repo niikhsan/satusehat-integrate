@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Request;
 use Niikhsan\SatusehatIntegrate\Models\SatusehatLog;
 use Niikhsan\SatusehatIntegrate\Models\SatusehatCondition;
 use Niikhsan\SatusehatIntegrate\Models\SatusehatEncounter;
+use Niikhsan\SatusehatIntegrate\Models\SatusehatTransactionResponse;
 use Niikhsan\SatusehatIntegrate\Models\SatusehatToken;
 
 class OAuth2Client
